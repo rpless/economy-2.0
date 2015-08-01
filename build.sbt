@@ -14,8 +14,8 @@ lazy val baseSettings = Seq(
   libraryDependencies ++= baseDependencies,
   scalacOptions ++= compilerOptions,
   resolvers ++= Seq(
-    "Ghost4j releases" at "https://repo.ghost4j.org/maven2/releases",
-    "image-io-bintray" at "https://www.mygrid.org.uk/maven/repository"
+    "Ghost4j releases" at "http://repo.ghost4j.org/maven2/releases",
+    "image-io-bintray" at "http://www.mygrid.org.uk/maven/repository"
   )
 )
 
