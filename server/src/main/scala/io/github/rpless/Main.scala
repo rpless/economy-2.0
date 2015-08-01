@@ -1,7 +1,7 @@
 package io.github.rpless
 
-import com.twitter.util.Await
 import com.twitter.finagle.Httpx
+import com.twitter.util.Await
 import io.finch.route._
 
 object Main extends App {

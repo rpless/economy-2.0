@@ -12,12 +12,17 @@ lazy val baseSettings = Seq(
   version := "0.1.0",
   scalaVersion := "2.11.7",
   libraryDependencies ++= baseDependencies,
-  scalacOptions ++= compilerOptions
+  scalacOptions ++= compilerOptions,
+  resolvers ++= Seq(
+    "Ghost4j releases" at "https://repo.ghost4j.org/maven2/releases",
+    "image-io-bintray" at "https://www.mygrid.org.uk/maven/repository"
+  )
 )
 
 lazy val baseDependencies = Seq(
   "com.github.finagle" %% "finch-core" % "0.7.1",
   "com.github.finagle" %% "finch-argonaut" % "0.7.1",
+  "net.sourceforge.tess4j" % "tess4j" % "2.0.0",
 
   "org.scalatest" %% "scalatest" % "2.2.5" % "test"
 )
