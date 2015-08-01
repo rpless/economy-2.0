@@ -17,7 +17,7 @@ class OcrSpec extends FlatSpec with Matchers {
   }
 
 
-  "Ocr" should "get string from generated image" in {
+  it should "get string from generated image" in {
     testWithText("A Longer String")
   }
 
@@ -31,8 +31,8 @@ class OcrSpec extends FlatSpec with Matchers {
     val graphics = img.getGraphics
     graphics.setColor(Color.BLACK)
     graphics.setFont(new Font("Arial Black", Font.BOLD, 20))
-    graphics.drawString(text,10,50)
-    ImageIO.write(img,"jpg",new File("/tmp/out.jpg"))
+    graphics.drawString(text, 10, 50)
+    ImageIO.write(img, "jpg", new File("/tmp/out.jpg"))
     img
   }
 }
