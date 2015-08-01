@@ -1,6 +1,7 @@
 package io.github.rpless
 
 import java.awt.image.BufferedImage
+import net.sourceforge.tess4j.ITessAPI.TessPageSegMode
 import net.sourceforge.tess4j.TessAPI1._
 import net.sourceforge.tess4j.util.ImageIOHelper
 import scala.util.{Success, Failure, Try}
@@ -9,8 +10,8 @@ import scala.util.{Success, Failure, Try}
  */
 class Ocr {
   val api = TessBaseAPICreate()
-//  val dataPath = getClass.getResource("/").getPath
-  private val success = TessBaseAPIInit3(api, "./", "eng") == 0
+  val dataPath = getClass.getResource("/").getPath
+  private val success = TessBaseAPIInit3(api, dataPath, "eng") == 0
 
   def getRawText(img: BufferedImage): String = {
     val pixelSize = img.getColorModel.getPixelSize
@@ -18,7 +19,9 @@ class Ocr {
     val bpl = Math.ceil(img.getWidth * bpp)
     val buf = ImageIOHelper.convertImageData(img)
 
+    TessBaseAPISetPageSegMode(api, TessPageSegMode.PSM_AUTO)
     TessBaseAPISetImage(api, buf, img.getWidth, img.getHeight, bpp.toInt, bpl.toInt)
+    TessBaseAPISetRectangle(api, 0, 0, img.getWidth, img.getHeight);
 
     val ptr = TessBaseAPIGetUTF8Text(api)
     val str = ptr.getString(0)

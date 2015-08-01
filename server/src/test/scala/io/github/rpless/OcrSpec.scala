@@ -2,6 +2,8 @@ package io.github.rpless
 
 import java.awt.{Font, Color}
 import java.awt.image.BufferedImage
+import java.io.File
+import javax.imageio.ImageIO
 
 import org.scalatest.{Matchers, FlatSpec}
 
@@ -14,8 +16,12 @@ class OcrSpec extends FlatSpec with Matchers {
     testWithText("")
   }
 
-  "Ocr" should "get simple string from generated image" in {
-    testWithText("LALALALALALAE FA#R #WR W# ))W$T:W:# RW :FW :#!{}|")
+  "Ocr" should "get one char string from generated image" in {
+    testWithText("L")
+  }
+
+  "Ocr" should "get long string from generated image" in {
+    testWithText("LALALALALALAE FA#Rsfe")
   }
 
   def testWithText(text: String): Unit = {
@@ -24,12 +30,12 @@ class OcrSpec extends FlatSpec with Matchers {
   }
 
   def imageWithText(text: String): BufferedImage = {
-    val img = new BufferedImage(1024, 768, BufferedImage.TYPE_INT_ARGB)
+    val img = new BufferedImage(1024, 800, BufferedImage.TYPE_4BYTE_ABGR)
     val graphics = img.getGraphics
-    graphics.fillRect(0, 0, 200, 50);
-    graphics.setColor(Color.BLACK);
-    graphics.setFont(new Font("Arial Black", Font.BOLD, 20));
+    graphics.setColor(Color.BLACK)
+    graphics.setFont(new Font("Arial Black", Font.BOLD, 20))
     graphics.drawString(text,10,50)
-    return img
+    ImageIO.write(img,"jpg",new File("/tmp/out.jpg"))
+    img
   }
 }
