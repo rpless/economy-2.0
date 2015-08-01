@@ -2,6 +2,7 @@
 lazy val economytwo = project.in(file("."))
   .settings(moduleName := "economytwo")
   .settings(baseSettings)
+  .aggregate(server)
 
 lazy val server = project
   .settings(moduleName := "server")
