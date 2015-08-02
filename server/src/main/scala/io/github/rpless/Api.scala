@@ -4,18 +4,19 @@ import javax.imageio.ImageIO
 
 import io.finch.request._
 import io.finch.route._
-import io.finch._
+import TextInterpreter.Item
 
 object Api {
   val ocr = Ocr().get
 
   val authorizer = RequestReader.value[Boolean](true).should(ValidationRule[Boolean]("auth"){f => f})
 
-  val fileToImage = fileUpload("image").embedFlatMap({file =>
+  val fileToImage = fileUpload("image") ~> {file =>
     val img = ImageIO.read(file.getFile)
-    TextInterpreter(ocr.getRawText(img)).toFuture
-  })
+    TextInterpreter(ocr.getRawText(img))
+  }
 
-  def receiptEndpoint: Router[RequestReader[Seq[TextInterpreter.Item]]] =
-    Post / "receipt" /> (authorizer :: fileToImage).asTuple.embedFlatMap(_._2.toFuture)
+  def receiptEndpoint: Router[RequestReader[Seq[Item]]] =
+    Post / "receipt" /> (authorizer :: fileToImage).asTuple ~> {_._2}
+
 }
